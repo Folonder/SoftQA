@@ -1,0 +1,14 @@
+<human name="a1">
+	<human name="aa2">
+		<human name="aaa3">
+		</human>
+		<human name="aab3" target="True" kinship_degree="2">
+		</human>
+	</human>
+	<human name="ab2">
+		<human name="aba3">
+		</human>
+		<human name="abb3">
+		</human>
+	</human>
+</human>
