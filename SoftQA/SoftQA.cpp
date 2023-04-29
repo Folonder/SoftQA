@@ -1,54 +1,14 @@
-﻿#include <iostream>
-#include "rapidxml/rapidxml.hpp"
-#include "rapidxml/rapidxml_utils.hpp"
-#include <vector>
-#include "Exceptions/FileNotFound.h"
-#include "Exceptions/KinshipDegree.h"
+﻿#include "SoftQA.h"
+#include <iostream>
 
 using namespace std;
 using namespace rapidxml;
 
-
-vector<xml_node<>*> cousins;
-
-/*! Найти звено в дереве, которое содержит атрибут с переданным именем
-*\param [in] root - корень дерева
-*\param [in] attributeName - имя атрибута
-* return звено с нужным атрибутом
-*/
-xml_node<>* findNodeWithAttribute(xml_node<>* node, const string& attributeName);
-
-/*! Найти предка звена по его потомку на несколько поколений
-*\param [in] parent - родитель
-*\param [in] child - ребенок
-*\param [in] generation - текущее поколение
-* return родитель и ребенок, от которого до этого родителя дошли
-*/
-tuple<xml_node<>*, xml_node<>*> getParentAndChildByGeneration(xml_node<>* parent, xml_node<>* child, int generation);
-
-
-void getChildrenAtTheGeneration(xml_node<>* parent, int generation);
-
-/*! Найти кузенов человека по xml дереву
-*\param [out] cousins - вектор кузенов человека
-*\param [in] fileName - имя файла с деревом
-*/
-void getCousins(char* fileName);
-
-
-void writeCousinsInFile(char* fileName);
-
-
-int validateNodeAttribute(xml_node<>*);
-
-
-string readXmlFile(const char* fileName);
-
-
+#ifdef _MSC_VER
 int main() {
     try {
 
-        getCousins((char*)"data1.xml");
+        getCousins((char*)"data1.xml", (char*)"output.txt");
 
     }
     catch (FileNotFoundException ex) {
@@ -66,40 +26,37 @@ int main() {
     return 0;
 }
 
+#else
+int main(int argc, char* argv[]) {
+    try {
+        if (argc != 3) {
+            throw runtime_error("Incorrect arguments");
+        }
 
-//int main(int argc, char* argv[]) {
-//    try {
-//        if (argc != 3) {
-//            throw runtime_error("Incorrect arguments");
-//        }
-//
-//        vector<xml_node<>*> cousins;
-//
-//        getCousins(cousins, argv[1]);
-//
-//        writeCousinsInFile(cousins, argv[2]);
-//    }
-//    catch (FileNotFoundException ex) {
-//        cout << ex.what();
-//        return 0;
-//    }
-//    catch (KinshipDegreeException ex) {
-//        cout << ex.what();
-//        return 0;
-//    }
-//    catch (runtime_error ex) {
-//        cout << ex.what();
-//    }
-//
-//    return 0;
-//}
+        getCousins(argv[1], argv[2]);
+
+    }
+    catch (FileNotFoundException ex) {
+        cout << ex.what();
+        return 0;
+    }
+    catch (KinshipDegreeException ex) {
+        cout << ex.what();
+        return 0;
+    }
+    catch (runtime_error ex) {
+        cout << ex.what();
+    }
+
+    return 0;
+}
+#endif
 
 
-
-void getCousins(char* fileName) {
+void getCousins(char* inputFile, char* outputFile) {
 
     xml_document<> doc;
-    string xml = readXmlFile(fileName);
+    string xml = readXmlFile(inputFile);
     doc.parse<0>((char*)xml.c_str());
     xml_node<>* root = doc.first_node();
 
@@ -116,7 +73,7 @@ void getCousins(char* fileName) {
         }
     }
 
-    writeCousinsInFile((char*)"output1.txt");
+    writeCousinsInFile(outputFile);
 }
 
 
@@ -187,7 +144,6 @@ xml_node<>* findNodeWithAttribute(xml_node<>* node, const string& attributeName)
 void writeCousinsInFile(char* fileName) {
     std::ofstream outfile(fileName);
 
-    // Check if the file was opened successfully
     if (!outfile.is_open()) {
 
         throw FileNotFoundException(fileName);

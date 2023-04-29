@@ -33,7 +33,7 @@ void getChildrenAtTheGeneration(xml_node<>* parent, int generation);
 *\param [out] cousins - вектор кузенов человека
 *\param [in] fileName - имя файла с деревом
 */
-void getCousins(char* fileName);
+void getCousins(char* inputFile, char* outputFile);
 
 
 void writeCousinsInFile(char* fileName);
@@ -43,4 +43,7 @@ void readXmlInDoc(char* fileName, xml_document<>*);
 
 
 int validateNodeAttribute(xml_node<>*);
-#pragma once
+
+
+
+string readXmlFile(const char* fileName);
