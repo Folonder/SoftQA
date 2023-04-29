@@ -1,6 +1,6 @@
 ﻿  SoftQA.cpp
 C:\учеба\4 семестр\кинпо\SoftQA\SoftQA\rapidxml\rapidxml_utils.hpp(40,25): warning C4244: инициализация: преобразование "std::streamoff" в "size_t", возможна потеря данных
 C:\учеба\4 семестр\кинпо\SoftQA\SoftQA\rapidxml\rapidxml_utils.hpp(28): message : во время компиляции функции-члена класс шаблон "rapidxml::file<char>::file(const char *)"
-C:\учеба\4 семестр\кинпо\SoftQA\SoftQA\SoftQA.cpp(61): message : выполняется компиляция ссылки на экземпляр шаблон функции "rapidxml::file<char>::file(const char *)"
-C:\учеба\4 семестр\кинпо\SoftQA\SoftQA\SoftQA.cpp(61): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "rapidxml::file<char>"
+C:\учеба\4 семестр\кинпо\SoftQA\SoftQA\SoftQA.cpp(127): message : выполняется компиляция ссылки на экземпляр шаблон функции "rapidxml::file<char>::file(const char *)"
+C:\учеба\4 семестр\кинпо\SoftQA\SoftQA\SoftQA.cpp(127): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "rapidxml::file<char>"
   SoftQA.vcxproj -> C:\учеба\4 семестр\кинпо\SoftQA\Debug\SoftQA.exe
