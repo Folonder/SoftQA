@@ -39,11 +39,9 @@ void getCousins(char* inputFile, char* outputFile);
 void writeCousinsInFile(char* fileName);
 
 
-void readXmlInDoc(char* fileName, xml_document<>*);
-
 
 int validateNodeAttribute(xml_node<>*);
 
 
 
-string readXmlFile(const char* fileName);
+string readFile(char* fileName);

@@ -7,9 +7,7 @@ using namespace rapidxml;
 #ifdef _MSC_VER
 int main() {
     try {
-
         getCousins((char*)"data1.xml", (char*)"output.txt");
-
     }
     catch (FileNotFoundException ex) {
         cout << ex.what();
@@ -56,7 +54,7 @@ int main(int argc, char* argv[]) {
 void getCousins(char* inputFile, char* outputFile) {
 
     xml_document<> doc;
-    string xml = readXmlFile(inputFile);
+    string xml = readFile(inputFile);
     doc.parse<0>((char*)xml.c_str());
     xml_node<>* root = doc.first_node();
 
@@ -77,7 +75,7 @@ void getCousins(char* inputFile, char* outputFile) {
 }
 
 
-string readXmlFile(const char* fileName) {
+string readFile(char* fileName) {
     if (!std::ifstream(fileName)) {
         throw FileNotFoundException(fileName);
     }
@@ -90,21 +88,19 @@ string readXmlFile(const char* fileName) {
 int validateNodeAttribute(xml_node<>* node) {
     if (node) {
         try {
-            return  stoi(node->first_attribute()->value());
+            return stoi(node->first_attribute()->value());
         }
         catch (runtime_error ex) {
             throw KinshipDegreeException("Kinship degree is not int");
         }
     }
     throw KinshipDegreeException("Kinship degree is not specified");
-
 }
 
 
 void getChildrenAtTheGeneration(xml_node<>* parent, int generation) {
     if (generation > 0) {
         for (xml_node<>* child = parent->first_node(); child; child = child->next_sibling()) {
-            string name = child->name();
             getChildrenAtTheGeneration(child, generation - 1);
         }
     }
@@ -123,7 +119,6 @@ tuple<xml_node<>*, xml_node<>*> getParentAndChildByGeneration(xml_node<>* parent
 
 
 xml_node<>* findNodeWithAttribute(xml_node<>* node, const string& attributeName) {
-
     xml_attribute<>* attr = node->first_attribute(attributeName.c_str());
     if (attr) {
         return node;
@@ -140,13 +135,12 @@ xml_node<>* findNodeWithAttribute(xml_node<>* node, const string& attributeName)
 }
 
 
-
 void writeCousinsInFile(char* fileName) {
     std::ofstream outfile(fileName);
 
     if (!outfile.is_open()) {
 
-        throw FileNotFoundException(fileName);
+        throw runtime_error(fileName);
     }
     cout << "opened " << fileName << "\n";
     for (xml_node<>* cousin : cousins) {
